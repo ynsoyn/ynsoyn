@@ -8,7 +8,7 @@ Next.js 14 App Router + Three.js + Tailwind CSS
 
 ## 완료된 작업
 
-### 세션 1 — 프로젝트 세팅 + 레이아웃 + Home 페이지
+### 세션 1 — 2026-06-17 · 프로젝트 세팅 + 레이아웃 + Home 페이지
 
 #### 세팅
 - `create-next-app` (TypeScript, Tailwind, App Router, src-dir)
@@ -44,6 +44,12 @@ src/
 | 3d | 3D | 3D 모델링 & 렌더링 |
 | motion | Motion | 모션 그래픽 & 애니메이션 |
 | visual | Visual | 비주얼 디자인 |
+
+### 세션 2 — 2026-06-18 · 환경 점검
+
+- PowerShell 스크립트 실행 정책 문제 확인 및 해결
+  - `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned`
+- `npm run dev` 정상 동작 확인 (Next.js 16.2.9 / localhost:3000)
 
 ---
 
