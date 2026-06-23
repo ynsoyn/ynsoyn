@@ -1,7 +1,44 @@
 @import "tailwindcss";
 
+/* ── NexonCartGothic ── */
+@font-face {
+    font-family: 'NexonCartGothic';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2312-1@1.1/KartriderMedium.woff2') format('woff2');
+    font-weight: 500;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'NexonCartGothic';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2312-1@1.1/KartriderBold.woff2') format('woff2');
+    font-weight: 700;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'NexonCartGothic';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2312-1@1.1/KartriderExtraBold.woff2') format('woff2');
+    font-weight: 800;
+    font-display: swap;
+}
+
+/* ── GapyeongWave (카테고리 제목용) ── */
+@font-face {
+    font-family: 'GapyeongWave';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2312-1@1.1/GapyeongWave.woff2') format('woff2');
+    font-weight: normal;
+    font-display: swap;
+}
+
 @theme inline {
-  --font-sans: var(--font-geist);
+  --font-sans: 'NexonCartGothic';
+
+  /* Lyrical Glassmorphism palette */
+  --color-cream:      #f0ebe3;
+  --color-cream-deep: #e6dfd6;
+  --color-warm-dark:  #3d3530;
+  --color-warm-mid:   #8c7f78;
+  --color-warm-muted: #b5a99e;
+  --color-glass:      rgba(255, 255, 255, 0.52);
+  --color-glass-border: rgba(255, 255, 255, 0.58);
 }
 
 * {
@@ -11,7 +48,12 @@
 }
 
 body {
-  font-family: var(--font-geist), Arial, sans-serif;
-  background: #ffffff;
-  color: #171717;
+  background: #f0ebe3;
+  color: #3d3530;
+  font-family: 'NexonCartGothic', sans-serif;
 }
+
+/* Scrollbar — thin, warm */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #c8b9ae; border-radius: 2px; }
