@@ -172,7 +172,7 @@ export default function SpaceGraphScene({ onNodeClick }: SpaceGraphSceneProps) {
       <color attach="background" args={["#fdf9f7"]} />
 
       {/* HDR environment — drives reflections on MeshStandardMaterial */}
-      <Environment files="/sky.hdr" background={false} />
+      <Environment files={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/sky.hdr`} background={false} />
 
       {/* Supplemental lights to warm up the scene */}
       <ambientLight intensity={0.4} color="#fff4f0" />
