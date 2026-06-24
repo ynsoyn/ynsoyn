@@ -155,7 +155,7 @@ export default function MobileScene({ rotation }: { rotation: number }) {
       onMouseUp={stopDrag}
       onMouseLeave={stopDrag}
     >
-      <Canvas camera={{ position: [0.3, 0.15, 3.6], fov: 54 }} style={{ background: "#ede8e0" }}>
+      <Canvas camera={{ position: [0.3, 0.15, 3.6], fov: 54 }} style={{ background: "#eaeae8" }}>
         <MobileRig rotation={rotation} dragDelta={dragDelta} />
       </Canvas>
     </div>

@@ -8,9 +8,8 @@ const CharacterScene = dynamic(() => import("@/components/about/CharacterScene")
 const SpaceGraphScene = dynamic(() => import("@/components/about/SpaceGraphScene"), { ssr: false });
 
 const SNS_LINKS = [
-  { label: "Instagram", href: "#" },
-  { label: "LinkedIn",  href: "#" },
-  { label: "YouTube",   href: "#" },
+  { label: "LinkedIn",  href: "https://linkedin.com/in/soyn-yn-58ab79414" },
+  { label: "YouTube",   href: "https://youtube.com/@ynsoworks" },
   { label: "GitHub",    href: "https://github.com/ynsoyn" },
 ];
 
@@ -20,7 +19,16 @@ const EDUCATION = [
   { period: "2011—2014", school: "계원예술고등학교", dept: "미술과" },
 ];
 
-const CAREER_WORKS = ["환혼 Part 1/2 (tvN)", "한산: 용의 출현", "아일랜드 (TVING)", "스위트홈 시즌2 (Netflix)"];
+const CAREER_WORKS = [
+  "환혼 Part 1/2 (tvN)",
+  "한산: 용의 출현",
+  "아일랜드 (TVING)",
+  "스위트홈 시즌2 (Netflix)",
+  "킬러들의 쇼핑몰 (Disney+)",
+  "소년심판 (Netflix)",
+  "모범가족 (Netflix)",
+  "뉴 노멀",
+];
 
 const DIV_V = <div style={{ width: "1px", flexShrink: 0, background: "rgba(200,185,174,0.4)" }} />;
 
@@ -64,67 +72,18 @@ export default function AboutPage() {
         </div>
 
         {/* Bottom bio (flex: 3) */}
-        <div
-          style={{
-            flex: 3,
-            minHeight: 0,
-            overflowY: "auto",
-            display: "flex",
-            borderTop: "1px solid rgba(200,185,174,0.35)",
-          }}
-        >
-          {/* Name + title */}
-          <div style={{ flex: "0 0 auto", padding: "22px 28px 20px", minWidth: "170px" }}>
-            <h1 style={{ fontSize: "1.8rem", fontWeight: 500, color: "#3d3530", lineHeight: 1.15, marginBottom: "6px" }}>
-              윤소연
-            </h1>
-            <p style={{ fontSize: "0.6rem", letterSpacing: "0.16em", textTransform: "uppercase", color: "#c4b5ab" }}>
-              Designer · Developer
-            </p>
-          </div>
-
-          {DIV_V}
-
-          {/* Education */}
-          <div style={{ flex: 1, padding: "22px 24px 20px", minWidth: 0 }}>
-            <p style={{ fontSize: "0.57rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "#c4b5ab", marginBottom: "12px" }}>
-              Education
-            </p>
-            <ul style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-              {EDUCATION.map((e) => (
-                <li key={e.school}>
-                  <p style={{ fontSize: "0.58rem", color: "#b5a99e", marginBottom: "1px" }}>{e.period}</p>
-                  <p style={{ fontSize: "0.74rem", color: "#6b5f59", fontWeight: 500, marginBottom: "1px" }}>{e.school}</p>
-                  <p style={{ fontSize: "0.64rem", color: "#a09088" }}>{e.dept}</p>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {DIV_V}
-
-          {/* Career */}
-          <div style={{ flex: 1, padding: "22px 24px 20px", minWidth: 0 }}>
-            <p style={{ fontSize: "0.57rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "#c4b5ab", marginBottom: "12px" }}>
-              Career
-            </p>
-            <p style={{ fontSize: "0.58rem", color: "#b5a99e", marginBottom: "1px" }}>2021—2023</p>
-            <p style={{ fontSize: "0.74rem", color: "#6b5f59", fontWeight: 500, marginBottom: "1px" }}>위지윅 스튜디오</p>
-            <p style={{ fontSize: "0.64rem", color: "#a09088", marginBottom: "10px" }}>VFX Animator</p>
-            <ul style={{ display: "flex", flexDirection: "column", gap: "3px" }}>
-              {CAREER_WORKS.map((t) => (
-                <li key={t} style={{ fontSize: "0.62rem", color: "#b5a99e" }}>— {t}</li>
-              ))}
-            </ul>
-          </div>
-
-          {DIV_V}
-
-          {/* Links */}
-          <div style={{ flex: "0 0 auto", padding: "22px 24px 20px", minWidth: "95px" }}>
-            <p style={{ fontSize: "0.57rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "#c4b5ab", marginBottom: "12px" }}>
-              Links
-            </p>
+        <div style={{ flex: 3, minHeight: 0, position: "relative", borderTop: "1px solid rgba(200,185,174,0.35)" }}>
+        <div style={{ position: "absolute", inset: 0, overflowY: "auto", overflowX: "auto", display: "flex" }}>
+          {/* Name + title + links */}
+          <div style={{ flex: "0 0 auto", padding: "22px 28px 20px", minWidth: "170px", display: "flex", flexDirection: "column", gap: "16px" }}>
+            <div>
+              <h1 style={{ fontSize: "1.8rem", fontWeight: 700, color: "#3d3530", lineHeight: 1.15, marginBottom: "6px", fontFamily: "'SchoolSafetyNotification', sans-serif" }}>
+                윤소연
+              </h1>
+              <p style={{ fontSize: "0.6rem", letterSpacing: "0.16em", textTransform: "uppercase", color: "#c4b5ab" }}>
+                3D · XR · 3DUX · Virtual Designer
+              </p>
+            </div>
             <ul style={{ display: "flex", flexDirection: "column", gap: "9px" }}>
               {SNS_LINKS.map(({ label, href }) => (
                 <li key={label}>
@@ -142,6 +101,43 @@ export default function AboutPage() {
               ))}
             </ul>
           </div>
+
+          {DIV_V}
+
+          {/* Education */}
+          <div style={{ flex: 1, padding: "22px 24px 20px", minWidth: 0 }}>
+            <p style={{ fontSize: "0.57rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "#c4b5ab", marginBottom: "12px", fontFamily: "'ReperipointOblique', sans-serif", fontWeight: 200 }}>
+              Education
+            </p>
+            <ul style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+              {EDUCATION.map((e) => (
+                <li key={e.school}>
+                  <p style={{ fontSize: "0.58rem", color: "#b5a99e", marginBottom: "1px", fontFamily: "'Presentation', sans-serif" }}>{e.period}</p>
+                  <p style={{ fontSize: "0.74rem", color: "#6b5f59", fontWeight: 500, marginBottom: "1px", fontFamily: "'Presentation', sans-serif" }}>{e.school}</p>
+                  <p style={{ fontSize: "0.64rem", color: "#a09088", fontFamily: "'Presentation', sans-serif" }}>{e.dept}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {DIV_V}
+
+          {/* Career */}
+          <div style={{ flex: 1, padding: "22px 24px 20px", minWidth: 0 }}>
+            <p style={{ fontSize: "0.57rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "#c4b5ab", marginBottom: "12px", fontFamily: "'ReperipointOblique', sans-serif", fontWeight: 200 }}>
+              Career
+            </p>
+            <p style={{ fontSize: "0.58rem", color: "#b5a99e", marginBottom: "1px", fontFamily: "'Presentation', sans-serif" }}>2021—2023</p>
+            <p style={{ fontSize: "0.74rem", color: "#6b5f59", fontWeight: 500, marginBottom: "1px", fontFamily: "'Presentation', sans-serif" }}>위지윅 스튜디오</p>
+            <p style={{ fontSize: "0.64rem", color: "#a09088", marginBottom: "10px", fontFamily: "'Presentation', sans-serif" }}>VFX Animator</p>
+            <ul style={{ display: "flex", flexDirection: "column", gap: "3px" }}>
+              {CAREER_WORKS.map((t) => (
+                <li key={t} style={{ fontSize: "0.62rem", color: "#b5a99e", fontFamily: "'Presentation', sans-serif" }}>— {t}</li>
+              ))}
+            </ul>
+          </div>
+
+        </div>
         </div>
       </div>
 
@@ -149,7 +145,7 @@ export default function AboutPage() {
       {DIV_V}
 
       {/* ══ Right: Space graph ══ */}
-      <div style={{ flex: 1, position: "relative" }}>
+      <div style={{ flex: 1, position: "relative", minWidth: 0, height: "100%" }}>
         <SpaceGraphScene onNodeClick={setSelectedNode} />
       </div>
     </div>

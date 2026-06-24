@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion"; // motion used for layout only
 import { WORKS, type Work } from "@/data/works";
 import { type FilterState } from "./WorksFilter";
 
@@ -16,7 +16,8 @@ const NEU_SELECTED  = "inset 4px 4px 10px rgba(155,135,115,0.22), inset -3px -3p
 
 export default function WorksGrid({ filters, selectedId, onSelect }: WorksGridProps) {
   const filtered = WORKS.filter((w) => {
-    if (filters.category && w.category !== filters.category) return false;
+    if (filters.categories.length > 0 && !filters.categories.some((c) => w.categories.includes(c))) return false;
+    if (filters.tags.length > 0 && !filters.tags.some((t) => w.tags?.includes(t))) return false;
     if (filters.year && w.year !== filters.year) return false;
     if (filters.search && !w.title.toLowerCase().includes(filters.search.toLowerCase())) return false;
     return true;
@@ -30,17 +31,11 @@ export default function WorksGrid({ filters, selectedId, onSelect }: WorksGridPr
         </p>
       ) : (
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: "32px 32px" }}>
-          <AnimatePresence mode="popLayout">
             {filtered.map((work) => {
               const isSelected = work.id === selectedId;
               return (
-                <motion.div
+                <div
                   key={work.id}
-                  layout
-                  initial={{ opacity: 0, scale: 0.97 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.97 }}
-                  transition={{ duration: 0.2 }}
                   className="group cursor-pointer"
                   onClick={(e) => { e.stopPropagation(); onSelect?.(work); }}
                 >
@@ -73,12 +68,11 @@ export default function WorksGrid({ filters, selectedId, onSelect }: WorksGridPr
                     <p className="text-xs" style={{ color: "#b5a99e" }}>{work.year}</p>
                   </div>
                   <p className="text-xs mt-1 px-1 uppercase tracking-wider" style={{ color: "#c4b5ab" }}>
-                    {work.category}
+                    {work.categories.join(" · ")}
                   </p>
-                </motion.div>
+                </div>
               );
             })}
-          </AnimatePresence>
         </div>
       )}
     </>

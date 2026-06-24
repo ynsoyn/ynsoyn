@@ -13,22 +13,19 @@ export default function WorksCarousel({ activeCategory, onSelect }: WorksCarouse
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (scrollRef.current) scrollRef.current.scrollTop = 0;
+  }, [activeCategory]);
+
+  // 작업물 영역 위에서 휠 → 카테고리 회전 대신 내부 스크롤
+  useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
-    const handler = (e: WheelEvent) => {
-      e.preventDefault();
-      el.scrollLeft += e.deltaY * 1.2;
-    };
-    el.addEventListener("wheel", handler, { passive: false });
+    const handler = (e: WheelEvent) => { e.stopPropagation(); };
+    el.addEventListener("wheel", handler, { passive: true });
     return () => el.removeEventListener("wheel", handler);
   }, []);
 
-  // 카테고리 변경 시 스크롤 위치 초기화
-  useEffect(() => {
-    if (scrollRef.current) scrollRef.current.scrollLeft = 0;
-  }, [activeCategory]);
-
-  const filtered = WORKS.filter((w) => w.category === activeCategory);
+  const filtered = WORKS.filter((w) => w.categories.includes(activeCategory));
 
   return (
     <div
@@ -36,103 +33,82 @@ export default function WorksCarousel({ activeCategory, onSelect }: WorksCarouse
         height: "100%",
         display: "flex",
         flexDirection: "column",
-        justifyContent: "center",
-        background: "rgba(230, 223, 214, 0.6)",
+        background: "rgba(238, 238, 236, 0.6)",
         backdropFilter: "blur(12px)",
         borderTop: "1px solid rgba(255,255,255,0.55)",
+        overflow: "hidden",
       }}
     >
-      {/* 스크롤 컨테이너 — 항상 마운트 유지 */}
       <div
         ref={scrollRef}
-        className="overflow-x-auto cursor-ew-resize"
-        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+        style={{ flex: 1, overflowY: "auto", scrollbarWidth: "none", msOverflowStyle: "none" } as React.CSSProperties}
       >
         <AnimatePresence mode="wait">
           <motion.div
             key={activeCategory}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            exit={{ opacity: 0, transition: { duration: 0.12 } }}
-            transition={{ duration: 0.05 }}
-            className="flex gap-6 px-12 pt-7 pb-6 justify-center"
+            exit={{ opacity: 0, transition: { duration: 0.1 } }}
+            transition={{ duration: 0.15 }}
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              gap: "14px",
+              padding: "14px 24px 18px",
+              justifyContent: "center",
+              alignContent: "flex-start",
+            }}
           >
             {filtered.length === 0 ? (
               <motion.p
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1, transition: { delay: 0.1 } }}
-                className="text-sm py-6"
-                style={{ color: "#b5a99e" }}
+                style={{ fontSize: "0.875rem", padding: "20px 0", color: "#b5a99e" }}
               >
                 작업물이 없습니다.
               </motion.p>
             ) : (
-              <>
-                {filtered.map((work, i) => (
-                  <motion.div
-                    key={work.id}
-                    initial={{ opacity: 0, y: 22, scale: 0.92 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    transition={{
-                      duration: 0.3,
-                      delay: i * 0.07,
-                      ease: [0.22, 0.1, 0.28, 1],
+              filtered.map((work, i) => (
+                <motion.div
+                  key={work.id}
+                  initial={{ opacity: 0, y: 12, scale: 0.94 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{ duration: 0.26, delay: i * 0.05, ease: [0.22, 0.1, 0.28, 1] }}
+                  style={{ width: "min(200px, calc(50% - 7px))", cursor: "pointer", flexShrink: 0 }}
+                  onClick={() => onSelect?.(work)}
+                >
+                  <div
+                    style={{
+                      width: "100%",
+                      aspectRatio: "4/3",
+                      backgroundColor: work.bgColor,
+                      borderRadius: "12px",
+                      boxShadow: "4px 4px 10px rgba(155,135,115,0.22), -3px -3px 8px rgba(255,255,255,0.92)",
+                      transition: "transform 0.2s ease, box-shadow 0.2s ease",
                     }}
-                    className="flex-shrink-0 w-64 group cursor-pointer"
-                    onClick={() => onSelect?.(work)}
-                  >
-                    {/* Thumbnail */}
-                    <div
-                      className="w-full h-40 relative overflow-hidden transition-all duration-300"
-                      style={{
-                        backgroundColor: work.bgColor,
-                        borderRadius: "14px",
-                        boxShadow: "5px 5px 12px rgba(155,135,115,0.24), -3px -3px 9px rgba(255,255,255,0.92)",
-                      }}
-                      onMouseEnter={(e) => {
-                        (e.currentTarget as HTMLDivElement).style.boxShadow = "8px 8px 18px rgba(155,135,115,0.3), -4px -4px 12px rgba(255,255,255,0.96)";
-                        (e.currentTarget as HTMLDivElement).style.transform = "translateY(-2px)";
-                      }}
-                      onMouseLeave={(e) => {
-                        (e.currentTarget as HTMLDivElement).style.boxShadow = "5px 5px 12px rgba(155,135,115,0.24), -3px -3px 9px rgba(255,255,255,0.92)";
-                        (e.currentTarget as HTMLDivElement).style.transform = "translateY(0)";
-                      }}
-                    >
-                      <div
-                        className="absolute inset-0 transition-colors duration-200"
-                        style={{ background: "rgba(255,255,255,0)" }}
-                        onMouseEnter={(e) =>
-                          ((e.currentTarget as HTMLDivElement).style.background =
-                            "rgba(255,255,255,0.12)")
-                        }
-                        onMouseLeave={(e) =>
-                          ((e.currentTarget as HTMLDivElement).style.background =
-                            "rgba(255,255,255,0)")
-                        }
-                      />
-                    </div>
-                    {/* Label */}
-                    <div className="flex items-center gap-2 mt-2 px-0.5">
-                      <span className="text-xs font-medium" style={{ color: "#6b5f59" }}>
-                        {work.title}
-                      </span>
-                      <span className="text-xs ml-auto" style={{ color: "#b5a99e" }}>
-                        {work.year}
-                      </span>
-                    </div>
-                  </motion.div>
-                ))}
-                <div className="flex-shrink-0 w-4" />
-              </>
+                    onMouseEnter={(e) => {
+                      (e.currentTarget as HTMLDivElement).style.boxShadow = "6px 6px 14px rgba(155,135,115,0.28), -4px -4px 10px rgba(255,255,255,0.96)";
+                      (e.currentTarget as HTMLDivElement).style.transform = "translateY(-2px)";
+                    }}
+                    onMouseLeave={(e) => {
+                      (e.currentTarget as HTMLDivElement).style.boxShadow = "4px 4px 10px rgba(155,135,115,0.22), -3px -3px 8px rgba(255,255,255,0.92)";
+                      (e.currentTarget as HTMLDivElement).style.transform = "translateY(0)";
+                    }}
+                  />
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: "6px", padding: "0 2px" }}>
+                    <span style={{ fontSize: "0.72rem", fontWeight: 500, color: "#6b5f59", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", flex: 1, marginRight: "6px" }}>
+                      {work.title}
+                    </span>
+                    <span style={{ fontSize: "0.68rem", color: "#b5a99e", flexShrink: 0 }}>
+                      {work.year}
+                    </span>
+                  </div>
+                </motion.div>
+              ))
             )}
           </motion.div>
         </AnimatePresence>
       </div>
-
-      <div
-        className="mx-12 mb-4"
-        style={{ height: "1px", background: "rgba(255,255,255,0.4)" }}
-      />
     </div>
   );
 }

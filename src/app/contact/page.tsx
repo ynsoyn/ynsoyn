@@ -28,7 +28,7 @@ export default function ContactPage() {
     outline: "none",
     borderRadius: "14px",
     border: "none",
-    background: "#f0ebe3",
+    background: "#f4f4f2",
     color: "#3d3530",
     caretColor: "#3d3530",
     boxShadow: NEU_INSET,
@@ -41,9 +41,9 @@ export default function ContactPage() {
 
         <h1
           className="text-5xl font-light tracking-tight"
-          style={{ color: "#3d3530", marginBottom: "14px" }}
+          style={{ color: "#3d3530", marginBottom: "14px", fontFamily: "'SchoolSafetyNotification', sans-serif", fontWeight: 700 }}
         >
-          연락처
+          Contact
         </h1>
         <p
           className="text-sm"

@@ -9,6 +9,7 @@ export interface NodeInfo {
   id: string;
   label: string;
   color: string;
+  description?: string;
 }
 
 function SpinningOrb({ color }: { color: string }) {
@@ -62,7 +63,7 @@ interface Props {
 
 export default function NodeDetailPanel({ node, onDeselect }: Props) {
   return (
-    <div style={{ width: "100%", height: "100%", position: "relative", background: "#f5ebe6" }}>
+    <div style={{ width: "100%", height: "100%", position: "relative", background: "#f5f5f3" }}>
       <AnimatePresence mode="wait">
         {node ? (
           <motion.div
@@ -98,19 +99,37 @@ export default function NodeDetailPanel({ node, onDeselect }: Props) {
               ✕
             </button>
 
-            {/* 3D Orb — fills remaining space */}
-            <div style={{ flex: 1, minHeight: 0 }}>
+            {/* 3D Orb */}
+            <div style={{ height: "52%", flexShrink: 0 }}>
               <Canvas camera={{ position: [0, 0, 2.8], fov: 48 }}
-                style={{ background: "#f5ebe6" }}>
+                style={{ background: "#f5f5f3" }}>
                 <SpinningOrb color={node.color} />
               </Canvas>
             </div>
 
-            {/* Label */}
-            <div style={{ padding: "16px 20px 20px", textAlign: "center", flexShrink: 0 }}>
-              <p style={{ color: node.color, fontSize: "0.9rem", fontWeight: 500, letterSpacing: "0.05em", margin: 0 }}>
+            {/* Label + description */}
+            <div style={{ flex: 1, overflowY: "auto", padding: "14px 20px 18px" }}>
+              <p style={{
+                color: node.color,
+                fontSize: "0.88rem",
+                fontWeight: 600,
+                letterSpacing: "0.04em",
+                marginBottom: node.description ? "10px" : 0,
+                fontFamily: "'Presentation', sans-serif",
+              }}>
                 {node.label}
               </p>
+              {node.description && (
+                <p style={{
+                  fontSize: "0.72rem",
+                  color: "#8c7f78",
+                  lineHeight: 1.75,
+                  margin: 0,
+                  fontFamily: "'MaruBuri', serif",
+                }}>
+                  {node.description}
+                </p>
+              )}
             </div>
           </motion.div>
         ) : (
@@ -130,7 +149,6 @@ export default function NodeDetailPanel({ node, onDeselect }: Props) {
               gap: "14px",
             }}
           >
-            {/* Pulsing dot */}
             <motion.div
               animate={{ scale: [1, 1.18, 1], opacity: [0.35, 0.65, 0.35] }}
               transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
@@ -147,9 +165,34 @@ export default function NodeDetailPanel({ node, onDeselect }: Props) {
               letterSpacing: "0.1em",
               textAlign: "center",
               lineHeight: 1.7,
+              fontFamily: "'MaruBuri', serif",
             }}>
               요소를 눌러보세요
             </p>
+            <div style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "6px",
+              marginTop: "6px",
+              padding: "12px 18px",
+              borderTop: "1px solid rgba(200,185,174,0.25)",
+            }}>
+              {[
+                ["휠",          "확대 / 축소"],
+                ["휠 드래그",   "이동"],
+                ["클릭",        "요소 선택"],
+                ["클릭 드래그", "회전"],
+              ].map(([key, val]) => (
+                <div key={key} style={{ display: "flex", justifyContent: "space-between", gap: "12px" }}>
+                  <span style={{ fontSize: "0.6rem", color: "#d4b8b4", fontFamily: "'CloudSansCode', monospace", flexShrink: 0 }}>
+                    {key}
+                  </span>
+                  <span style={{ fontSize: "0.6rem", color: "#b5a99e", fontFamily: "'MaruBuri', serif", textAlign: "right" }}>
+                    {val}
+                  </span>
+                </div>
+              ))}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

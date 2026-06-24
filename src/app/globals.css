@@ -1,39 +1,275 @@
 @import "tailwindcss";
 
-/* ── NexonCartGothic ── */
+/* ── Sweet (SUITE) — 기본 폰트 ── */
 @font-face {
-    font-family: 'NexonCartGothic';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2312-1@1.1/KartriderMedium.woff2') format('woff2');
+    font-family: 'Sweet';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Light.woff2') format('woff2');
+    font-weight: 300;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Sweet';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Sweet';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Medium.woff2') format('woff2');
     font-weight: 500;
     font-display: swap;
 }
 @font-face {
-    font-family: 'NexonCartGothic';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2312-1@1.1/KartriderBold.woff2') format('woff2');
+    font-family: 'Sweet';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-SemiBold.woff2') format('woff2');
+    font-weight: 600;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Sweet';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Bold.woff2') format('woff2');
     font-weight: 700;
     font-display: swap;
 }
 @font-face {
-    font-family: 'NexonCartGothic';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2312-1@1.1/KartriderExtraBold.woff2') format('woff2');
+    font-family: 'Sweet';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-ExtraBold.woff2') format('woff2');
     font-weight: 800;
     font-display: swap;
 }
-
-/* ── GapyeongWave (카테고리 제목용) ── */
 @font-face {
-    font-family: 'GapyeongWave';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2312-1@1.1/GapyeongWave.woff2') format('woff2');
+    font-family: 'Sweet';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Heavy.woff2') format('woff2');
+    font-weight: 900;
+    font-display: swap;
+}
+
+/* ── Presentation (Freesentation) — About/Works 본문 ── */
+@font-face {
+    font-family: 'Presentation';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-1Thin.woff2') format('woff2');
+    font-weight: 100;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Presentation';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-2ExtraLight.woff2') format('woff2');
+    font-weight: 200;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Presentation';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-3Light.woff2') format('woff2');
+    font-weight: 300;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Presentation';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-4Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Presentation';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-5Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Presentation';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-6SemiBold.woff2') format('woff2');
+    font-weight: 600;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Presentation';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-7Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Presentation';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-8ExtraBold.woff2') format('woff2');
+    font-weight: 800;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Presentation';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-9Black.woff2') format('woff2');
+    font-weight: 900;
+    font-display: swap;
+}
+
+/* ── CloudSansCode — Works 상세 태그 ── */
+@font-face {
+    font-family: 'CloudSansCode';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408@1.0/goorm-sans-code.woff2') format('woff2');
     font-weight: normal;
     font-display: swap;
 }
 
+/* ── MaruBuri — NodeDetail 설명·안내 ── */
+@font-face {
+    font-family: 'MaruBuri';
+    src: url('https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-ExtraLight.woff2') format('woff2');
+    font-weight: 200;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'MaruBuri';
+    src: url('https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Light.woff2') format('woff2');
+    font-weight: 300;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'MaruBuri';
+    src: url('https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'MaruBuri';
+    src: url('https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-SemiBold.woff2') format('woff2');
+    font-weight: 600;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'MaruBuri';
+    src: url('https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-display: swap;
+}
+
+/* ── Galmat — 사이트 로고 ── */
+@font-face {
+    font-family: 'Galmat';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/naverfont_04@1.0/Galmetgol.woff') format('woff');
+    font-weight: normal;
+    font-display: swap;
+}
+
+/* ── MunmakchoHalfMoon — 카테고리 활성 제목 (Interactive) ── */
+@font-face {
+    font-family: 'MunmakchoHalfMoon';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2604-1@1.0/MUNMAK_DALBANCHE.woff2') format('woff2');
+    font-weight: normal;
+    font-display: swap;
+}
+
+/* ── EunpyeongSagaDokseo — (예비) ── */
+@font-face {
+    font-family: 'EunpyeongSagaDokseo';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2507-1@1.0/EunpyeongSagaDogseoText-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'EunpyeongSagaDokseo';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2507-1@1.0/EunpyeongSagaDogseoTitle-Regular.woff2') format('woff2');
+    font-weight: 600;
+    font-display: swap;
+}
+
+/* ── SchoolSafetyRoundedSmile (예비) ── */
+@font-face {
+    font-family: 'SchoolSafetyRoundedSmile';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-5@1.0/HakgyoansimDunggeunmisoTTF-B.woff2') format('woff2');
+    font-weight: 700;
+    font-display: swap;
+}
+
+/* ── SchoolSafetyNotification — Navbar, 이름, Works/Contact 제목 ── */
+@font-face {
+    font-family: 'SchoolSafetyNotification';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-5@1.0/HakgyoansimAllimjangTTF-R.woff2') format('woff2');
+    font-weight: 400;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'SchoolSafetyNotification';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-5@1.0/HakgyoansimAllimjangTTF-B.woff2') format('woff2');
+    font-weight: 700;
+    font-display: swap;
+}
+
+/* ── BookkMyungjo — 카테고리 활성 제목 (Research) ── */
+@font-face {
+    font-family: 'BookkMyungjo';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/BookkMyungjo-Lt.woff2') format('woff2');
+    font-weight: 400;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'BookkMyungjo';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/BookkMyungjo-Bd.woff2') format('woff2');
+    font-weight: 700;
+    font-display: swap;
+}
+
+/* ── KblJumpExtended — 카테고리 활성 제목 (XR/VR) ── */
+@font-face {
+    font-family: 'KblJumpExtended';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2601-5@1.0/KBLJump_EB_ExtendedTTF.woff2') format('woff2');
+    font-weight: normal;
+    font-display: swap;
+}
+
+/* ── SchoolSafetyChalk — 카테고리 활성 제목 (Animation & Film) ── */
+@font-face {
+    font-family: 'SchoolSafetyChalk';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-2@1.0/HakgyoansimBunpilR.woff2') format('woff2');
+    font-weight: normal;
+    font-display: swap;
+}
+
+/* ── HsJandari — 카테고리 활성 제목 (Design) ── */
+@font-face {
+    font-family: 'HsJandari';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2510-2@1.0/HSJandari.woff2') format('woff2');
+    font-weight: normal;
+    font-display: swap;
+}
+
+/* ── ReperipointOblique — 카테고리 비활성, 섹션 레이블, Works 카테고리 레이블 ── */
+@font-face {
+    font-family: 'ReperipointOblique';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/LeferiPoint-WhiteObliqueA.woff') format('woff');
+    font-weight: 200;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'ReperipointOblique';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/LeferiPoint-BlackObliqueA.woff') format('woff');
+    font-weight: 700;
+    font-display: swap;
+}
+
+/* ── NationalPension — 우주 그래프 3D 노드 레이블 ── */
+@font-face {
+    font-family: 'NationalPension';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/NPSfontRegular.woff2') format('woff2');
+    font-weight: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'NationalPension';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/NPSfontBold.woff2') format('woff2');
+    font-weight: 700;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'NationalPension';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/NPSfontExtraBold.woff2') format('woff2');
+    font-weight: 800;
+    font-display: swap;
+}
+
 @theme inline {
-  --font-sans: 'NexonCartGothic';
+  --font-sans: 'Sweet';
 
   /* Lyrical Glassmorphism palette */
-  --color-cream:      #f0ebe3;
-  --color-cream-deep: #e6dfd6;
+  --color-cream:      #f4f4f2;
+  --color-cream-deep: #e8e8e6;
   --color-warm-dark:  #3d3530;
   --color-warm-mid:   #8c7f78;
   --color-warm-muted: #b5a99e;
@@ -48,12 +284,29 @@
 }
 
 body {
-  background: #f0ebe3;
+  background: #f4f4f2;
   color: #3d3530;
-  font-family: 'NexonCartGothic', sans-serif;
+  font-family: 'Sweet', sans-serif;
 }
 
 /* Scrollbar — thin, warm */
 ::-webkit-scrollbar { width: 4px; height: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: #c8b9ae; border-radius: 2px; }
+
+/* Page transition scrollbar — hidden by default, appears on hover */
+.page-scroll {
+  scrollbar-width: none;
+  scrollbar-color: transparent transparent;
+}
+.page-scroll::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+.page-scroll:hover {
+  scrollbar-width: thin;
+  scrollbar-color: #c8b9ae transparent;
+}
+.page-scroll:hover::-webkit-scrollbar-thumb {
+  background: #c8b9ae;
+  transition: background 0.2s;
+}

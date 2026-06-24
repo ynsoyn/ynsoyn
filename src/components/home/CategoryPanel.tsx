@@ -3,6 +3,22 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { CATEGORIES } from "@/data/works";
 
+const CATEGORY_FONT: Record<string, string> = {
+  xr:          "'KblJumpExtended', sans-serif",
+  animation:   "'SchoolSafetyChalk', sans-serif",
+  interactive: "'MunmakchoHalfMoon', sans-serif",
+  research:    "'BookkMyungjo', serif",
+  design:      "'HsJandari', sans-serif",
+};
+
+const CATEGORY_SCALE: Record<string, number> = {
+  xr:          0.8,
+  animation:   1.0,
+  interactive: 1.0,
+  research:    1.0,
+  design:      1.2,
+};
+
 interface CategoryPanelProps {
   activeIndex: number;
   onCategoryClick?: (index: number) => void;
@@ -12,13 +28,9 @@ export default function CategoryPanel({ activeIndex, onCategoryClick }: Category
   const idx = activeIndex % CATEGORIES.length;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-      style={{ position: "relative", height: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}
-    >
-      {/* ── Vertical dot indicator (right side) ── */}
+    <div style={{ position: "relative", height: "100%", width: "100%" }}>
+
+      {/* ── 우측 도트 인디케이터 ── */}
       <div style={{
         position: "absolute",
         right: "32px",
@@ -28,6 +40,7 @@ export default function CategoryPanel({ activeIndex, onCategoryClick }: Category
         flexDirection: "column",
         alignItems: "center",
         gap: "10px",
+        zIndex: 2,
       }}>
         {CATEGORIES.map((_, i) => {
           const isActive = i === idx;
@@ -35,10 +48,10 @@ export default function CategoryPanel({ activeIndex, onCategoryClick }: Category
             <motion.div
               key={i}
               animate={{
-                width:   isActive ? 7 : 3,
-                height:  isActive ? 7 : 3,
+                width:      isActive ? 7 : 3,
+                height:     isActive ? 7 : 3,
                 background: isActive ? "#8c7f78" : "#d0c8c0",
-                opacity: isActive ? 1 : 0.5,
+                opacity:    isActive ? 1 : 0.5,
               }}
               transition={{ duration: 0.3, ease: "easeOut" }}
               style={{ borderRadius: "50%", cursor: "pointer", flexShrink: 0 }}
@@ -48,99 +61,80 @@ export default function CategoryPanel({ activeIndex, onCategoryClick }: Category
         })}
       </div>
 
-      {/* ── Category list (centered) ── */}
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%", padding: "40px 60px" }}>
+      {/* ── 카테고리 목록 ── */}
+      <div style={{
+        position: "absolute",
+        top: "50%",
+        left: 0,
+        right: 0,
+        transform: "translateY(-50%)",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}>
         {CATEGORIES.map((cat, i) => {
           const isActive = i === idx;
-
+          const activeFontSize = `${(3.6 * (CATEGORY_SCALE[cat.id] ?? 1)).toFixed(2)}rem`;
           return (
             <motion.div
               key={cat.id}
               initial={false}
               animate={{
-                marginTop:    isActive ? "10px" : "2px",
-                marginBottom: isActive ? "10px" : "2px",
+                marginTop:    isActive ? "14px" : "3px",
+                marginBottom: isActive ? "14px" : "3px",
               }}
               transition={{ duration: 0.35, ease: "easeOut" }}
-              style={{ position: "relative", cursor: "pointer", width: "100%", display: "flex", justifyContent: "center" }}
+              style={{ width: "100%", textAlign: "center", cursor: "pointer" }}
               onClick={() => onCategoryClick?.(i)}
             >
-              {/* Glass frame (scoped to text block) */}
-              <div style={{ position: "relative", display: "inline-block", textAlign: "center" }}>
-                <AnimatePresence>
-                  {isActive && (
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0.94 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.96 }}
-                      transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
-                      style={{
-                        position: "absolute",
-                        inset: "-16px -32px",
-                        borderRadius: "20px",
-                        background: "rgba(255, 255, 255, 0.34)",
-                        backdropFilter: "blur(14px)",
-                        WebkitBackdropFilter: "blur(14px)",
-                        border: "1px solid rgba(255, 255, 255, 0.68)",
-                        boxShadow: [
-                          "0 8px 28px rgba(155,135,115,0.10)",
-                          "inset 0 1.5px 0 rgba(255,255,255,0.80)",
-                          "inset 0 -1px 0 rgba(200,185,174,0.18)",
-                        ].join(", "),
-                        zIndex: 0,
-                        pointerEvents: "none",
-                      }}
-                    />
-                  )}
-                </AnimatePresence>
+              {/* 레이블 — 비활성: 촘촘 + 블러 / 활성: 크고 선명 */}
+              <motion.span
+                initial={false}
+                animate={{
+                  fontSize:      isActive ? activeFontSize : "1rem",
+                  color:         isActive ? "#3d3530" : "#c4b5ab",
+                  letterSpacing: isActive ? "-0.02em" : "0.04em",
+                  filter:        isActive ? "blur(0px)" : "blur(1.8px)",
+                }}
+                transition={{ duration: 0.38, ease: [0.25, 0.1, 0.25, 1] }}
+                style={{
+                  display: "block",
+                  fontWeight: isActive ? 400 : 200,
+                  lineHeight: isActive ? 1.15 : 0.95,
+                  fontFamily: isActive
+                    ? (CATEGORY_FONT[cat.id] ?? "'Sweet', sans-serif")
+                    : "'ReperipointOblique', 'Sweet', sans-serif",
+                }}
+              >
+                {cat.label}
+              </motion.span>
 
-                <div style={{ position: "relative", zIndex: 1 }}>
-                  <motion.span
-                    initial={false}
-                    animate={{
-                      fontSize:      isActive ? "2.4rem" : "0.78rem",
-                      color:         isActive ? "#3d3530" : "#c4b5ab",
-                      fontWeight:    isActive ? 300 : 400,
-                      letterSpacing: isActive ? "-0.02em" : "0.02em",
-                    }}
-                    transition={{ duration: 0.38, ease: [0.25, 0.1, 0.25, 1] }}
+              {/* 설명 — 활성일 때만 렌더링, 박스 없음 */}
+              <AnimatePresence>
+                {isActive && (
+                  <motion.p
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.24, ease: "easeOut" }}
                     style={{
-                      display: "block",
-                      lineHeight: isActive ? 1.1 : 1.6,
+                      fontSize: "1.26rem",
+                      color: "#a09088",
+                      marginTop: "7px",
+                      lineHeight: 1.7,
+                      letterSpacing: "0.01em",
                       textAlign: "center",
-                      fontFamily: isActive ? "'GapyeongWave', sans-serif" : undefined,
+                      pointerEvents: "none",
                     }}
                   >
-                    {cat.label}
-                  </motion.span>
-
-                  <AnimatePresence>
-                    {isActive && (
-                      <motion.p
-                        initial={{ opacity: 0, y: 4, height: 0 }}
-                        animate={{ opacity: 1, y: 0, height: "auto" }}
-                        exit={{ opacity: 0, y: -4, height: 0 }}
-                        transition={{ duration: 0.25, delay: 0.15 }}
-                        style={{
-                          fontSize: "0.72rem",
-                          color: "#a09088",
-                          marginTop: "5px",
-                          lineHeight: 1.7,
-                          letterSpacing: "0.01em",
-                          overflow: "hidden",
-                          textAlign: "center",
-                        }}
-                      >
-                        {cat.description}
-                      </motion.p>
-                    )}
-                  </AnimatePresence>
-                </div>
-              </div>
+                    {cat.description}
+                  </motion.p>
+                )}
+              </AnimatePresence>
             </motion.div>
           );
         })}
       </div>
-    </motion.div>
+    </div>
   );
 }

@@ -19,8 +19,34 @@ export default function HomePage() {
   const [rotation, setRotation] = useState(0);
   const [activeCatIndex, setActiveCatIndex] = useState(0);
   const [selectedWork, setSelectedWork] = useState<Work | null>(null);
+  const [splitPct, setSplitPct] = useState(62);
   const rotRef = useRef(0);
   const pageRef = useRef<HTMLDivElement>(null);
+  const rightRef = useRef<HTMLDivElement>(null);
+  const isDragging = useRef(false);
+
+  const handleDividerMouseDown = (e: React.MouseEvent) => {
+    e.preventDefault();
+    isDragging.current = true;
+    document.body.style.cursor = "row-resize";
+    document.body.style.userSelect = "none";
+
+    const onMove = (ev: MouseEvent) => {
+      if (!isDragging.current || !rightRef.current) return;
+      const rect = rightRef.current.getBoundingClientRect();
+      const pct = ((ev.clientY - rect.top) / rect.height) * 100;
+      setSplitPct(Math.min(75, Math.max(35, pct)));
+    };
+    const onUp = () => {
+      isDragging.current = false;
+      document.body.style.cursor = "";
+      document.body.style.userSelect = "";
+      window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("mouseup", onUp);
+    };
+    window.addEventListener("mousemove", onMove);
+    window.addEventListener("mouseup", onUp);
+  };
 
   useEffect(() => {
     const el = pageRef.current;
@@ -48,7 +74,7 @@ export default function HomePage() {
       style={{ height: "calc(100vh - 72px)" }}
     >
       {/* ── Left: 3D Mobile (full height) ── */}
-      <div style={{ width: "50%", position: "relative" }}>
+      <div style={{ width: "50%", flexShrink: 0, height: "100%", position: "relative" }}>
         <MobileScene rotation={rotation} />
 
         {/* Work detail overlay */}
@@ -68,7 +94,7 @@ export default function HomePage() {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                background: "rgba(236, 228, 222, 0.76)",
+                background: "rgba(240, 240, 238, 0.76)",
                 backdropFilter: "blur(16px)",
                 WebkitBackdropFilter: "blur(16px)",
               }}
@@ -83,14 +109,14 @@ export default function HomePage() {
                   width: "72%",
                   borderRadius: "20px",
                   overflow: "hidden",
-                  background: "rgba(250, 245, 241, 0.97)",
+                  background: "rgba(252, 252, 250, 0.97)",
                   boxShadow: "10px 10px 28px rgba(155,135,115,0.24), -6px -6px 18px rgba(255,255,255,0.92)",
                 }}
               >
                 {/* Thumbnail area */}
                 <div
                   style={{
-                    height: "180px",
+                    height: "260px",
                     backgroundColor: selectedWork.bgColor,
                     position: "relative",
                   }}
@@ -120,16 +146,14 @@ export default function HomePage() {
                 </div>
 
                 {/* Info */}
-                <div style={{ padding: "24px 28px 28px" }}>
-                  <div style={{ display: "flex", alignItems: "baseline", gap: "10px", marginBottom: "10px" }}>
-                    <h2 style={{ fontSize: "1.35rem", fontWeight: 600, color: "#3d3530", margin: 0 }}>
-                      {selectedWork.title}
-                    </h2>
-                    <span style={{ fontSize: "0.7rem", color: "#b5a99e" }}>{selectedWork.year}</span>
-                  </div>
+                <div style={{ padding: "28px 32px 36px" }}>
+                  <span style={{ fontSize: "0.7rem", color: "#b5a99e", display: "block", marginBottom: "4px" }}>{selectedWork.year}</span>
+                  <h2 style={{ fontSize: "1.35rem", fontWeight: 600, color: "#3d3530", margin: "0 0 10px" }}>
+                    {selectedWork.title}
+                  </h2>
 
                   <p style={{ fontSize: "0.62rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "#c4b5ab", marginBottom: "14px" }}>
-                    {selectedWork.category}
+                    {selectedWork.categories.join(" · ")}
                   </p>
 
                   {selectedWork.description && (
@@ -147,7 +171,7 @@ export default function HomePage() {
                             fontSize: "0.62rem",
                             padding: "4px 12px",
                             borderRadius: "999px",
-                            background: "#f0ebe3",
+                            background: "#f4f4f2",
                             color: "#8c7f78",
                             boxShadow: "inset 2px 2px 5px rgba(155,135,115,0.18), inset -1px -1px 4px rgba(255,255,255,0.85)",
                             letterSpacing: "0.08em",
@@ -168,9 +192,9 @@ export default function HomePage() {
       {/* Vertical divider */}
       <div style={{ width: "1px", background: "rgba(200,185,174,0.5)", flexShrink: 0 }} />
 
-      {/* ── Right: Category 3 / Works 2 ── */}
-      <div className="flex-1 flex flex-col min-h-0">
-        <div style={{ flex: 3, minHeight: 0, overflow: "hidden" }}>
+      {/* ── Right: draggable split (default 6:4) ── */}
+      <div ref={rightRef} className="flex-1 flex flex-col min-h-0">
+        <div style={{ height: `${splitPct}%`, minHeight: 0, overflow: "hidden" }}>
           <CategoryPanel activeIndex={activeCatIndex} onCategoryClick={(i) => {
             const target = i * RAD_PER_CAT;
             rotRef.current = target;
@@ -178,7 +202,22 @@ export default function HomePage() {
             setActiveCatIndex(i);
           }} />
         </div>
-        <div style={{ flex: 2, minHeight: 0 }}>
+
+        {/* Horizontal drag divider */}
+        <div
+          onMouseDown={handleDividerMouseDown}
+          style={{
+            height: "5px",
+            flexShrink: 0,
+            cursor: "row-resize",
+            background: "rgba(200,185,174,0.35)",
+            transition: "background 0.2s",
+          }}
+          onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(200,185,174,0.7)")}
+          onMouseLeave={(e) => (e.currentTarget.style.background = "rgba(200,185,174,0.35)")}
+        />
+
+        <div style={{ flex: 1, minHeight: 0 }}>
           <WorksCarousel activeCategory={activeCategory} onSelect={setSelectedWork} />
         </div>
       </div>
