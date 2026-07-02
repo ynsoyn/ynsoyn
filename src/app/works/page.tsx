@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import WorksFilter, { type FilterState } from "@/components/works/WorksFilter";
 import WorksGrid from "@/components/works/WorksGrid";
-import { CATEGORIES, type Work } from "@/data/works";
+import { CATEGORIES, PROCESS_LABELS, type Work } from "@/data/works";
 
 export default function WorksPage() {
   const [filters, setFilters] = useState<FilterState>({ search: "", categories: [], tags: [], year: "" });
@@ -133,7 +133,7 @@ export default function WorksPage() {
 
                   {/* Tags */}
                   {selectedWork.tags && selectedWork.tags.length > 0 && (
-                    <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+                    <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", marginBottom: selectedWork.processSteps ? "32px" : "0" }}>
                       {selectedWork.tags.map((tag) => (
                         <span
                           key={tag}
@@ -151,6 +151,82 @@ export default function WorksPage() {
                           {tag}
                         </span>
                       ))}
+                    </div>
+                  )}
+
+                  {/* Process Steps */}
+                  {selectedWork.processSteps && selectedWork.processSteps.length > 0 && (
+                    <div>
+                      <p style={{ fontSize: "0.57rem", letterSpacing: "0.16em", textTransform: "uppercase", color: "#c4b5ab", marginBottom: "14px", fontFamily: "'ReperipointOblique', sans-serif", fontWeight: 200 }}>
+                        process
+                      </p>
+                      <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                        {selectedWork.processSteps.map((step, i) => (
+                          <div
+                            key={step.type}
+                            style={{
+                              display: "flex",
+                              gap: "14px",
+                              alignItems: "flex-start",
+                            }}
+                          >
+                            {/* 인덱스 + 연결선 */}
+                            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", flexShrink: 0, paddingTop: "2px" }}>
+                              <div style={{
+                                width: "22px",
+                                height: "22px",
+                                borderRadius: "50%",
+                                background: "#f4f4f2",
+                                boxShadow: "3px 3px 8px rgba(155,135,115,0.22), -2px -2px 6px rgba(255,255,255,0.9)",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                fontSize: "0.58rem",
+                                color: "#a09088",
+                                fontFamily: "'CloudSansCode', monospace",
+                                flexShrink: 0,
+                              }}>
+                                {i + 1}
+                              </div>
+                              {i < selectedWork.processSteps!.length - 1 && (
+                                <div style={{ width: "1px", flex: 1, minHeight: "14px", background: "rgba(196,181,171,0.4)", marginTop: "4px" }} />
+                              )}
+                            </div>
+
+                            {/* 내용 */}
+                            <div style={{ paddingBottom: i < selectedWork.processSteps!.length - 1 ? "8px" : "0" }}>
+                              <p style={{ fontSize: "0.7rem", fontWeight: 600, color: "#6b5f59", marginBottom: "3px", letterSpacing: "0.02em" }}>
+                                {PROCESS_LABELS[step.type]}
+                              </p>
+                              {step.description && (
+                                <p style={{ fontSize: "0.7rem", color: "#a09088", lineHeight: 1.6, marginBottom: step.artifacts ? "6px" : "0" }}>
+                                  {step.description}
+                                </p>
+                              )}
+                              {step.artifacts && step.artifacts.length > 0 && (
+                                <div style={{ display: "flex", gap: "5px", flexWrap: "wrap" }}>
+                                  {step.artifacts.map((a) => (
+                                    <span
+                                      key={a}
+                                      style={{
+                                        fontSize: "0.58rem",
+                                        padding: "3px 10px",
+                                        borderRadius: "999px",
+                                        border: "1px solid rgba(196,181,171,0.45)",
+                                        color: "#b5a99e",
+                                        letterSpacing: "0.04em",
+                                        fontFamily: "'CloudSansCode', monospace",
+                                      }}
+                                    >
+                                      {a}
+                                    </span>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   )}
                 </div>

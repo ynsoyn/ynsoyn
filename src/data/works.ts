@@ -8,11 +8,41 @@ export const CATEGORIES = [
 
 export type CategoryId = (typeof CATEGORIES)[number]["id"];
 
+// ── 신규: 상위 도메인 3개 ──────────────────────────────────
+export const DOMAINS = [
+  { id: "experience-design", label: "Experience Design", description: "XR · 인터랙티브 · 경험 설계" },
+  { id: "research",          label: "Research",          description: "논문 · 실험 · 프로토타입" },
+  { id: "production",        label: "Production",        description: "CG · VFX · 영상 제작" },
+] as const;
+
+export type DomainId = (typeof DOMAINS)[number]["id"];
+
+// ── 신규: 프로세스 단계 ────────────────────────────────────
+export type ProcessType = "concept" | "design" | "dev" | "research" | "paper" | "content";
+
+export const PROCESS_LABELS: Record<ProcessType, string> = {
+  concept:  "콘셉트 디자인",
+  design:   "디자인",
+  dev:      "개발",
+  research: "연구",
+  paper:    "논문",
+  content:  "콘텐츠 결과물",
+};
+
+export interface ProcessStep {
+  type: ProcessType;
+  description?: string;
+  artifacts?: string[];       // 결과물 목록 (텍스트)
+  connects?: ProcessType[];   // 우주맵 연결선용
+}
+
 export interface Work {
   id: string;
   title: string;
   year: number;
   categories: CategoryId[];
+  domain?: DomainId;          // 신규 (선택적 — 점진 적용)
+  processSteps?: ProcessStep[]; // 신규 (선택적)
   bgColor: string;
   description?: string;
   details?: string;
@@ -48,6 +78,27 @@ export const WORKS: Work[] = [
     title: "바보 온달 세계관 영상",
     year: 2026,
     categories: ["animation", "xr"],
+    domain: "production",
+    processSteps: [
+      {
+        type: "concept",
+        description: "바보온달·평강공주 원전 각색 · 세계관 설정 · 창작 콘티",
+        artifacts: ["각색 스토리", "세계관 설정집", "콘티"],
+        connects: ["design", "content"],
+      },
+      {
+        type: "design",
+        description: "창작 스토리보드 · 연출 설계",
+        artifacts: ["스토리보드"],
+        connects: ["concept", "content"],
+      },
+      {
+        type: "content",
+        description: "AI + 3D 영상 제작 · 최종 오프닝 영상",
+        artifacts: ["오프닝 영상 (VR 삽입용)"],
+        connects: ["design"],
+      },
+    ],
     bgColor: "#c4c8d4",
     description: "바보온달이 평강공주와 만나고 마법의 검을 갖게되어 전투에 나가는 이야기. VR 엑서게임에 삽입된 세계관 오프닝 영상.",
     details: "기존 바보온달·평강공주 이야기 각색 + 창작 콘티 · 창작 스토리보드 · 창작 연출 · AI작업.",
@@ -154,6 +205,45 @@ export const WORKS: Work[] = [
     title: "CAVE 시스템 기반 인터랙티브 팝업스토어 콘텐츠 기획에 관한 연구",
     year: 2025,
     categories: ["xr", "research", "interactive"],
+    domain: "research",
+    processSteps: [
+      {
+        type: "concept",
+        description: "기존 팝업스토어의 한계 분석 → CAVE 기반 지속가능 대안 기획",
+        artifacts: ["기획안", "콘셉트 문서"],
+        connects: ["research", "design"],
+      },
+      {
+        type: "research",
+        description: "문헌 연구 · 사례 분석 · 설문조사",
+        artifacts: ["선행연구 분석", "사용자 설문 결과"],
+        connects: ["concept", "dev", "paper"],
+      },
+      {
+        type: "design",
+        description: "4면 프로젝션 인터랙션 디자인 · 캐릭터 설계",
+        artifacts: ["인터랙션 설계서", "캐릭터 디자인"],
+        connects: ["concept", "dev"],
+      },
+      {
+        type: "dev",
+        description: "3D 콘텐츠 제작 · 추천 알고리즘 · 프로토타입 개발",
+        artifacts: ["3D 애니메이션", "프로토타입 빌드"],
+        connects: ["design", "research", "content"],
+      },
+      {
+        type: "content",
+        description: "전통주 체험 CAVE 콘텐츠 최종 결과물",
+        artifacts: ["CAVE 인터랙티브 콘텐츠"],
+        connects: ["dev"],
+      },
+      {
+        type: "paper",
+        description: "공동저자 · KCI 디지털 콘텐츠 학회 게재",
+        artifacts: ["KCI 논문"],
+        connects: ["research"],
+      },
+    ],
     bgColor: "#d8cccc",
     description: "자원 낭비를 유발하는 기존 팝업스토어의 한계에 대한 지속 가능한 대안으로 CAVE 기반 인터랙티브 팝업스토어 콘텐츠를 제안한다.",
     details: "문헌 연구, 사례 분석, 설문조사를 통해 CAVE의 효과성 및 바닥면 활용의 부족, 상호작용 다양성의 한계, 구매 연계 미흡 등의 문제를 확인하였다. 이를 해결하기 위해, 본 연구는 지역 전통주를 중심 콘텐츠로 4면 프로젝션 기반 캐릭터 활용 상호작용과 개인 맞춤형 전통주 추천 알고리즘, 지역 관광 정보 제공을 통합한 프로토타입을 개발하였다. 개발된 콘텐츠는 다인 체험에서도 개별화된 경험을 가능하게 했으며, 전통주 체험이 관광·지역 활성화로 확장될 가능성을 제시하였다. 종합적으로, 본 연구는 CAVE 기반 팝업스토어의 확장성과 지속 가능성을 실증적으로 확인하였으며, 향후 XR 기반 마케팅 전략 전반에 활용할 수 있는 구체적인 방향성을 제안한다.\n\n역할: 기획, 인터랙션 디자인, 3D 콘텐츠 제작 및 애니메이션. 공동저자. KCI 디지털 콘텐츠 학회.",
@@ -249,6 +339,33 @@ export const WORKS: Work[] = [
     title: "VR 엑서게임",
     year: 2026,
     categories: ["xr", "interactive"],
+    domain: "experience-design",
+    processSteps: [
+      {
+        type: "concept",
+        description: "바보온달 세계관 기반 VR 엑서게임 기획 · 팀 리드",
+        artifacts: ["기획서", "세계관 문서", "스토리보드"],
+        connects: ["design", "dev"],
+      },
+      {
+        type: "design",
+        description: "레벨 디자인 · UI/UX · 오프닝 영상 콘티",
+        artifacts: ["레벨 디자인 문서", "UI 설계"],
+        connects: ["concept", "dev", "content"],
+      },
+      {
+        type: "dev",
+        description: "Unity VR 개발 · 인터랙션 로직 · 빌드",
+        artifacts: ["Unity 프로젝트", "VR 빌드"],
+        connects: ["design", "content"],
+      },
+      {
+        type: "content",
+        description: "바보온달 세계관 오프닝 영상 (AI + 3D)",
+        artifacts: ["오프닝 영상"],
+        connects: ["design", "dev"],
+      },
+    ],
     bgColor: "#d8ccd4",
     description: "기획·설계·디자인·개발까지 전담한 VR 엑서게임. 가상융합서비스 개발자경진대회 출품작 (팀장).",
     details: "바보온달 세계관 오프닝 영상 포함. Unity 기반 VR 콘텐츠 개발. 성인-자유 부문 출전.",
